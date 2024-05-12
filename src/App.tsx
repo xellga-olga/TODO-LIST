@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 
 import styles from "./App.module.css";
+
 import { Header } from "./components/header/Header";
+import { TodoPanel } from "./components/todoPanel/TodoPanel";
+import { Todo } from "./Type";
+import { TodoList } from "./components/todoList/TodoList";
+
+
 
 const DEFAULT_TODO_LIST = [
   {
@@ -29,13 +35,18 @@ const DEFAULT_TODO_LIST = [
 export const App = () => {
 
   const [todos, setTodos] = useState(DEFAULT_TODO_LIST)
-   console.log("todos, setTodos", todos, setTodos)
+
+  const addTodo = ({ name, description }: Omit<Todo, 'id' | 'checked'>) => {
+    setTodos([...todos, { id: todos[todos.length - 1].id + 1, description, name, checked: false }]);
+  };
 
 
   return (
     <div className={styles.appContainer}>
       <div className={styles.container}>
         <Header todoCount={todos.length}/>
+        <TodoPanel addTodo={addTodo} mode="add"/>
+        <TodoList todos={todos}/>
       </div>
     </div>
   );
