@@ -21,12 +21,15 @@ interface EditTodoPanelProps {
 type TodoPanelProps = AddTodoPanelProps | EditTodoPanelProps;
 
 export const TodoPanel: React.FC<TodoPanelProps> = (props) => {
+  
   const isEdit = props.mode === 'edit';
+
   const [todo, setTodo] = React.useState(isEdit ? props.editTodo : DEFAULT_TODO);
 
   const onClick = () => {
+    const todoItem = { name: todo.name, description: todo.description }
     if (isEdit) {
-      return props.changeTodo(todo);
+      return props.changeTodo(todoItem);
     }
     props.addTodo(todo);
     setTodo(DEFAULT_TODO);
